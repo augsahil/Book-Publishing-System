@@ -286,6 +286,6 @@ curl http://localhost:4000/api/audits \
 
 ## 👤 Author
 
-I buuilt this as a **technical assignment submission** to demonstrate backend engineering, audit design, and system thinking.
+I built this as a **technical assignment submission** to demonstrate backend engineering, audit design, and system thinking.
 
 ---
