@@ -1,17 +1,27 @@
-import jwt from 'jsonwebtoken'
-import { User } from '../models/user.model'
-import { asyncStore } from './request-context.middleware'
-import { env } from '../config/env'
+import { Request, Response, NextFunction } from 'express'
+import User from '../models/user.model'
 
-export const auth = async (req: any, res: any, next: any) => {
-  const token = req.headers.authorization?.split(' ')[1]
-  if (!token) return res.status(401).json({ error: 'Unauthorized' })
+export interface AuthRequest extends Request {
+  user?: any
+}
 
-  const payload: any = jwt.verify(token, env.JWT_SECRET)
-  const user = await User.findById(payload.id)
-  if (!user) return res.status(401).json({ error: 'Invalid token' })
+export const authMiddleware = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const apiKey = req.headers['x-api-key'] as string
 
-  asyncStore.getStore()?.set('userId', user.id)
+  if (!apiKey) {
+    return res.status(401).json({ error: 'API key missing' })
+  }
+
+  const user = await User.findOne({ apiKey })
+
+  if (!user) {
+    return res.status(401).json({ error: 'Invalid API key' })
+  }
+
   req.user = user
   next()
 }

@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { auth } from '../middleware/auth.middleware'
+import { authMiddleware as auth } from '../middleware/auth.middleware'
 import { adminOnly } from '../middleware/rbac.middleware'
 import { AuditLog } from '../models/audit.model'
 

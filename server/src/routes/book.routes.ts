@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { auth } from '../middleware/auth.middleware'
+import { authMiddleware as auth } from '../middleware/auth.middleware'
 import { createBook, updateBook } from '../services/book.service'
 import { Book } from '../models/book.model'
 

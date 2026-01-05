@@ -1,32 +1,42 @@
 import { Router } from 'express'
-import jwt from 'jsonwebtoken'
-import { User } from '../models/user.model'
-import { env } from '../config/env'
+import User from '../models/user.model'
 
 const router = Router()
 
 // LOGIN
 router.post('/login', async (req, res) => {
-  const { name, credentials } = req.body
+  const { name, apiKey } = req.body
 
-  const user = await User.findOne({ name, credentials })
+  const user = await User.findOne({ name, apiKey })
   if (!user) {
     return res.status(401).json({ error: 'Invalid credentials' })
   }
 
-  const token = jwt.sign(
-    { id: user._id },
-    env.JWT_SECRET,
-    { expiresIn: '1d' }
-  )
-
   res.json({
-    token,
     user: {
       id: user._id,
       name: user.name,
       role: user.role,
     },
+  })
+})
+
+// ME
+router.get('/me', async (req, res) => {
+  const apiKey = req.headers['x-api-key'] as string
+  if (!apiKey) {
+    return res.status(401).json({ error: 'API key required' })
+  }
+
+  const user = await User.findOne({ apiKey })
+  if (!user) {
+    return res.status(401).json({ error: 'Invalid API key' })
+  }
+
+  res.json({
+    id: user._id,
+    name: user.name,
+    role: user.role,
   })
 })
 
