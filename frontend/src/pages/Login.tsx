@@ -65,12 +65,6 @@ const Login = () => {
               {isLoading ? 'Signing in...' : 'Sign in'}
             </button>
           </div>
-
-          <div className="text-sm text-center text-gray-600">
-            <p>Demo API Keys:</p>
-            <p>Admin: admin123</p>
-            <p>Reviewer: reviewer123</p>
-          </div>
         </form>
       </div>
     </div>
