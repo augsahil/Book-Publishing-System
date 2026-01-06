@@ -22,22 +22,17 @@ MongoDB was chosen for its flexibility with document-based storage, ease of loca
    cd ../frontend && npm install
    ```
 
-2. Start MongoDB (locally or via Docker):
-   ```bash
-   docker run -d -p 27017:27017 mongo
-   ```
-
-3. Seed the database:
+2. Seed the database:
    ```bash
    cd server && npm run seed
    ```
 
-4. Start the backend:
+3. Start the backend:
    ```bash
    cd server && npm run dev
    ```
 
-5. Start the frontend:
+4. Start the frontend:
    ```bash
    cd frontend && npm run dev
    ```
@@ -73,12 +68,12 @@ Then update the service to call `createAudit` on changes.
 
 List books:
 ```bash
-curl -H "x-api-key: admin123" http://localhost:4000/api/books?limit=10
+curl -H "x-api-key: <admin api key>" http://localhost:4000/api/books?limit=10
 ```
 
 Create book:
 ```bash
-curl -X POST -H "x-api-key: admin123" -H "Content-Type: application/json" \
+curl -X POST -H "x-api-key: <admin api key>" -H "Content-Type: application/json" \
   -d '{"title":"New Book","authors":"Author","publishedBy":"Publisher"}' \
   http://localhost:4000/api/books
 ```
@@ -87,15 +82,10 @@ curl -X POST -H "x-api-key: admin123" -H "Content-Type: application/json" \
 
 List audits:
 ```bash
-curl -H "x-api-key: admin123" "http://localhost:4000/api/audits?entity=Book&limit=20"
+curl -H "x-api-key: <admin api key>" "http://localhost:4000/api/audits?entity=Book&limit=20"
 ```
 
 Filter by date:
 ```bash
-curl -H "x-api-key: admin123" "http://localhost:4000/api/audits?from=2023-01-01T00:00:00Z&to=2023-12-31T23:59:59Z"
+curl -H "x-api-key: <admin api key>" "http://localhost:4000/api/audits?from=2023-01-01T00:00:00Z&to=2023-12-31T23:59:59Z"
 ```
-
-## Demo Users
-
-- Admin: `admin123`
-- Reviewer: `reviewer123`
